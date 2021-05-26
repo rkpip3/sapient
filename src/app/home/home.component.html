@@ -1,0 +1,57 @@
+<header>
+  <h2>SppaceX Launch Programs</h2>
+</header>
+
+<section class="main">
+
+  <div class="grid clearfix">
+
+    <div class="filter floating">
+      <h2>Filters</h2>
+      <h3>Launch Years</h3>
+
+      <button *ngFor="let item of listOfYear;" [class.active]="launchYearsButtonStatus == item"
+        (click)="setLaunchYear(item)"> {{item}} </button>
+
+      <h3>Successfull Launch</h3>
+      <button (click)="setSuccessfullLaunch(true)" [class.active]="LaunchButtonStatus == true"> True </button>
+      <button (click)="setSuccessfullLaunch(false)" [class.active]="LaunchButtonStatus == false"> False </button>
+
+      <h3>Successfull Landing</h3>
+      <button (click)="setSuccessfullLanding(true)" [class.active]="LandingButtonStatus == true"> True </button>
+      <button (click)="setSuccessfullLanding(false)" [class.active]="LandingButtonStatus == false"> False </button>
+    </div>
+
+    <div class="right floating clearfix">
+
+      <!-- no data  -->
+      <p *ngIf="launch_data_availability == 0 " class="no_data"> No Data...</p>
+
+      <!-- loading... -->
+      <div *ngIf="loading == true" class="loading ">
+        <img src="assets/img/loading-buffering.gif" alt="loading">
+      </div>
+
+      <!-- main result -->
+      <div class="showResults floating" *ngFor="let item of launch_data">
+        <div class="logo">
+          <div *ngIf="item.links.mission_patch_small != null">
+            <img src={{item.links.mission_patch_small}} alt={{item.mission_name}}>
+          </div>
+          <p *ngIf="item.links.mission_patch_small == null">
+            <img src="assets/img/img_not.png" alt="">
+          </p>
+        </div>
+        <p class="missionName"> <strong>{{item.mission_name}}</strong> </p>
+        <p class="titles"> <strong>Mission ids : </strong> {{item.mission_id}}</p>
+        <p class="titles"> <strong>Launch Year : </strong> {{item.launch_year}}</p>
+        <p class="titles"> <strong>Successfully Launch : </strong> {{item.launch_success}}</p>
+        <p class="titles" > <strong>Successfully Landing : </strong>{{item.rocket.first_stage.cores[0].land_success}}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p><strong>Developed by</strong> Raghavendra AK</p>
+</footer>
